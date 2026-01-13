@@ -1,0 +1,221 @@
+-- PART B: SAMPLE DATA LOAD (5–10 rows / table)
+-- Run after the schema above is created.
+-- ============================================================
+-- 1) Departments
+INSERT INTO department (dept_no, name, phone, fax, location, manager_staff_no, manager_start_date)
+VALUES (10, 'CIS',         '0207123456', '0207123000', 'E Block', NULL, NULL);
+INSERT INTO department (dept_no, name, phone, fax, location, manager_staff_no, manager_start_date)
+VALUES (20, 'EEE',         '0207123457', '0207123001', 'D Block', NULL, NULL);
+INSERT INTO department (dept_no, name, phone, fax, location, manager_staff_no, manager_start_date)
+VALUES (30, 'Mathematics', '0207123458', '0207123002', 'C Block', NULL, NULL);
+INSERT INTO department (dept_no, name, phone, fax, location, manager_staff_no, manager_start_date)
+VALUES (40, 'Physics',     '0207123459', '0207123003', 'B Block', NULL, NULL);
+INSERT INTO department (dept_no, name, phone, fax, location, manager_staff_no, manager_start_date)
+VALUES (50, 'Chemistry',   '0207123460', '0207123004', 'A Block', NULL, NULL);
+INSERT INTO department (dept_no, name, phone, fax, location, manager_staff_no, manager_start_date)
+VALUES (60, 'Biology',     '0207123461', '0207123005', 'E Block', NULL, NULL);
+-- 2) Academic Staff (must exist before assigning managers/leaders)
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2001, 'Ahmed',  'Khan',   '2345', 'E101', 'M', 42000, 'Lecturer',         'PhD, BSc',    '10 King St, London', 10, 'akhan');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2002, 'Beth',   'Lee',    '2346', 'E102', 'F', 52000, 'Senior Lecturer',  'PhD, MSc',    '22 Queen St, London', 10, 'blee');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2003, 'Carlos', 'Mendez', '3345', 'D201', 'M', 48000, 'Lecturer',         'MSc, BEng',   '5 Elm Rd, London',   20, 'cmendez');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2004, 'Diana',  'Ng',     '3346', 'D202', 'F', 60000, 'Professor',        'PhD, MEng',   '8 Oak Rd, London',   20, 'dng');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2005, 'Eliot',  'ONeil',  '4345', 'C301', 'M', 55000, 'Senior Lecturer',  'PhD',         '14 Pine Ave, London',30, 'eoneil');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2006, 'Grace',  'Hall',   '2347', 'E103', 'F', 45000, 'Lecturer',         'MSc',         '2 Maple St, London', 10, 'ghall');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2007, 'Henry',  'Adams',  '2348', 'E104', 'M', 47000, 'Lecturer',         'MSc',         '3 Birch St, London', 10, 'hadams');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2008, 'Irene',  'Fox',    '3347', 'D203', 'F', 53000, 'Senior Lecturer',  'PhD',         '12 Cedar Rd, London',20, 'ifox');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2009, 'Jon',    'Park',   '4445', 'B101', 'M', 58000, 'Professor',        'PhD, MPhys',  '21 River Rd, London',40, 'jpark');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2010, 'Kara',   'Singh',  '4446', 'A201', 'F', 56000, 'Senior Lecturer',  'PhD, MChem',  '23 Lake St, London', 50, 'ksingh');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2011, 'Liam',   'Green',  '5551', 'F301', 'M', 49000, 'Lecturer',         'MSc',         '30 Meadow Rd, London',60, 'lgreen');
+INSERT INTO academic_staff (staff_no, f_name, l_name, phone_ext, office_no, sex, salary, post, qualifications, address, dept_no, user_id)
+VALUES (2012, 'Maya',   'Stone',  '5552', 'F302', 'F', 62000, 'Professor',        'PhD',         '31 Meadow Rd, London',60, 'mstone');
+-- 3) Assign department managers (now that staff exist)
+UPDATE department SET manager_staff_no = 2002, manager_start_date = TO_DATE('2025-10-01','YYYY-MM-DD') WHERE dept_no = 10;
+UPDATE department SET manager_staff_no = 2004, manager_start_date = TO_DATE('2025-09-15','YYYY-MM-DD') WHERE dept_no = 20;
+UPDATE department SET manager_staff_no = 2005, manager_start_date = TO_DATE('2025-09-20','YYYY-MM-DD') WHERE dept_no = 30;
+UPDATE department SET manager_staff_no = 2009, manager_start_date = TO_DATE('2025-09-10','YYYY-MM-DD') WHERE dept_no = 40;
+UPDATE department SET manager_staff_no = 2010, manager_start_date = TO_DATE('2025-09-12','YYYY-MM-DD') WHERE dept_no = 50;
+UPDATE department SET manager_staff_no = 2012, manager_start_date = TO_DATE('2025-09-18','YYYY-MM-DD') WHERE dept_no = 60;
+-- 4) Courses (leaders reference academic_staff)
+INSERT INTO course (course_code, title, duration_years, dept_no, leader_staff_no)
+VALUES ('PGDIT',   'PgDIT',                          1, 10, 2002);
+INSERT INTO course (course_code, title, duration_years, dept_no, leader_staff_no)
+VALUES ('BSC-CIS', 'BSc Computer Information Systems', 3, 10, 2006);
+INSERT INTO course (course_code, title, duration_years, dept_no, leader_staff_no)
+VALUES ('EE-BENG', 'BEng Electrical Engineering',      3, 20, 2004);
+INSERT INTO course (course_code, title, duration_years, dept_no, leader_staff_no)
+VALUES ('PHYS-BSC', 'BSc Physics', 3, 40, 2009);
+INSERT INTO course (course_code, title, duration_years, dept_no, leader_staff_no)
+VALUES ('CHEM-BSC', 'BSc Chemistry', 3, 50, 2010);
+INSERT INTO course (course_code, title, duration_years, dept_no, leader_staff_no)
+VALUES ('BIO-BSC',  'BSc Biology',   3, 60, 2012);
+INSERT INTO course (course_code, title, duration_years, dept_no, leader_staff_no)
+VALUES ('CIS-MSC',  'MSc Information Systems', 1, 10, 2007);
+-- 5) Modules (each belongs to exactly one course)
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('BITS', 'Business IT Systems', TO_DATE('2025-09-27','YYYY-MM-DD'), TO_DATE('2025-12-15','YYYY-MM-DD'),
+        'Laudon & Laudon', 'CW 50% / Exam 50%', 'PGDIT', 2001);
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('SDEV', 'Software Development', TO_DATE('2025-10-01','YYYY-MM-DD'), TO_DATE('2025-12-20','YYYY-MM-DD'),
+        'Deitel', 'CW 60% / Exam 40%', 'PGDIT', 2002);
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('FDBS', 'Foundations of Databases', TO_DATE('2025-09-27','YYYY-MM-DD'), TO_DATE('2025-12-15','YYYY-MM-DD'),
+        'Connolly & Begg', 'CW 50% / Exam 50%', 'PGDIT', 2001);
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('OOAD', 'Object-Oriented Analysis & Design', TO_DATE('2025-10-01','YYYY-MM-DD'), TO_DATE('2025-12-20','YYYY-MM-DD'),
+        'Larman', 'CW 40% / Exam 60%', 'PGDIT', 2002);
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('CIS201', 'Systems Analysis', TO_DATE('2025-09-27','YYYY-MM-DD'), TO_DATE('2026-05-20','YYYY-MM-DD'),
+        'Sommerville', 'CW 100%', 'BSC-CIS', 2006);
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('EE101', 'Signals & Systems', TO_DATE('2025-09-27','YYYY-MM-DD'), TO_DATE('2026-05-20','YYYY-MM-DD'),
+        'Oppenheim', 'Exam 100%', 'EE-BENG', 2004);
+-- Extra modules
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('PH101', 'Classical Mechanics', TO_DATE('2025-09-27','YYYY-MM-DD'), TO_DATE('2026-01-10','YYYY-MM-DD'),
+        'Halliday & Resnick', 'Exam 70% / CW 30%', 'PHYS-BSC', 2009);
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('PH102', 'Electromagnetism', TO_DATE('2025-09-27','YYYY-MM-DD'), TO_DATE('2026-01-10','YYYY-MM-DD'),
+        'Griffiths', 'Exam 60% / CW 40%', 'PHYS-BSC', 2008);
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('CH101', 'Organic Chemistry', TO_DATE('2025-10-01','YYYY-MM-DD'), TO_DATE('2026-01-20','YYYY-MM-DD'),
+        'Clayden', 'Exam 70% / CW 30%', 'CHEM-BSC', 2010);
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('BI101', 'Cell Biology', TO_DATE('2025-10-05','YYYY-MM-DD'), TO_DATE('2026-01-22','YYYY-MM-DD'),
+        'Alberts', 'Exam 60% / CW 40%', 'BIO-BSC', 2012);
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('CIS601', 'Advanced DB Systems', TO_DATE('2025-10-10','YYYY-MM-DD'), TO_DATE('2026-01-25','YYYY-MM-DD'),
+        'Connolly & Begg', 'CW 50% / Exam 50%', 'CIS-MSC', 2007);
+INSERT INTO module (module_code, title, start_date, end_date, texts, assessment_scheme, course_code, coordinator_staff_no)
+VALUES ('BIO201', 'Genetics', TO_DATE('2025-10-10','YYYY-MM-DD'), TO_DATE('2026-01-25','YYYY-MM-DD'),
+        'Griffiths', 'Exam 100%', 'BIO-BSC', 2011);
+-- 6) Students (each enrols in one course)
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('00/5021', 'A', 'Mcleod', '6 Lady Lane', 'Paisley', 'PA1 1AA', TO_DATE('2004-01-15','YYYY-MM-DD'), 'F', 3500, 'PGDIT', 'amcleod');
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('00/4647', 'J', 'Smith',  '6 Lady Lane', 'Paisley', 'PA1 1AA', TO_DATE('2003-11-20','YYYY-MM-DD'), 'M', 3200, 'PGDIT', 'jsmith1');
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('01/4670', 'M', 'Owen',   '28 New Str',  'Paisley', 'PA1 2BB', TO_DATE('2004-05-02','YYYY-MM-DD'), 'F', 3600, 'PGDIT', 'mowen');
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('01/4765', 'J', 'Smith',  '28 New Str',  'Paisley', 'PA1 2BB', TO_DATE('2003-08-08','YYYY-MM-DD'), 'M', 3000, 'PGDIT', 'jsmith2');
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('02/5001', 'L', 'Brown',  '10 Green Rd', 'London',  'N1 1AB', TO_DATE('2004-03-18','YYYY-MM-DD'), 'F', 4000, 'BSC-CIS', 'lbrown');
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('02/5002', 'N', 'Taylor', '40 Brook St', 'London',  'N1 2CD', TO_DATE('2004-02-10','YYYY-MM-DD'), 'F', 3800, 'PHYS-BSC', 'ntaylor');
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('02/5003', 'O', 'White',  '41 Brook St', 'London',  'N1 2CE', TO_DATE('2003-09-12','YYYY-MM-DD'), 'M', 3700, 'CHEM-BSC', 'owhite');
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('02/5004', 'P', 'Jones',  '42 Brook St', 'London',  'N1 2CF', TO_DATE('2004-06-05','YYYY-MM-DD'), 'F', 3900, 'BIO-BSC',  'pjones');
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('02/5005', 'Q', 'Clark',  '43 Brook St', 'London',  'N1 2CG', TO_DATE('2003-12-25','YYYY-MM-DD'), 'M', 4100, 'CIS-MSC', 'qclark');
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('02/5006', 'R', 'Patel',  '44 Brook St', 'London',  'N1 2CH', TO_DATE('2004-04-19','YYYY-MM-DD'), 'F', 3600, 'PHYS-BSC', 'rpatel');
+INSERT INTO student (matric_no, f_name, l_name, street, town, postcode, dob, sex, financial_loan, course_code, user_id)
+VALUES ('02/5007', 'S', 'Ahmed',  '45 Brook St', 'London',  'N1 2CJ', TO_DATE('2003-07-07','YYYY-MM-DD'), 'M', 3650, 'CHEM-BSC', 'sahmed');
+-- 7) Next of Kin (1:1)
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9001, 'Anne Mcleod', '6 Lady Lane, Paisley', '07111111111', 'Mother', '00/5021');
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9002, 'Jack Smith', '6 Lady Lane, Paisley', '07222222222', 'Father', '00/4647');
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9003, 'Mary Owen', '28 New Str, Paisley', '07333333333', 'Mother', '01/4670');
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9004, 'James Smith', '28 New Str, Paisley', '07444444444', 'Father', '01/4765');
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9005, 'Laura Brown', '10 Green Rd, London', '07555555555', 'Mother', '02/5001');
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9006, 'Nina Taylor', '40 Brook St, London', '07600000001', 'Mother', '02/5002');
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9007, 'Oscar White', '41 Brook St, London', '07600000002', 'Father', '02/5003');
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9008, 'Paula Jones', '42 Brook St, London', '07600000003', 'Mother', '02/5004');
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9009, 'Quinn Clark', '43 Brook St, London', '07600000004', 'Father', '02/5005');
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9010, 'Rita Patel',  '44 Brook St, London', '07600000005', 'Mother', '02/5006');
+INSERT INTO next_of_kin (kin_id, name, address, phone, relationship, student_matric_no)
+VALUES (9011, 'Sam Ahmed',   '45 Brook St, London', '07600000006', 'Father', '02/5007');
+-- 8) Enrollment (student ↔ course; unique per student/course)
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50001, TO_DATE('2025-09-27','YYYY-MM-DD'), NULL, '00/5021', 'PGDIT');
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50002, TO_DATE('2025-09-27','YYYY-MM-DD'), NULL, '00/4647', 'PGDIT');
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50003, TO_DATE('2025-09-27','YYYY-MM-DD'), NULL, '01/4670', 'PGDIT');
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50004, TO_DATE('2025-09-27','YYYY-MM-DD'), NULL, '01/4765', 'PGDIT');
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50005, TO_DATE('2025-09-27','YYYY-MM-DD'), NULL, '02/5001', 'BSC-CIS');
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50006, TO_DATE('2025-09-28','YYYY-MM-DD'), NULL, '02/5002', 'PHYS-BSC');
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50007, TO_DATE('2025-09-28','YYYY-MM-DD'), NULL, '02/5003', 'CHEM-BSC');
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50008, TO_DATE('2025-09-28','YYYY-MM-DD'), NULL, '02/5004', 'BIO-BSC');
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50009, TO_DATE('2025-10-01','YYYY-MM-DD'), NULL, '02/5005', 'CIS-MSC');
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50010, TO_DATE('2025-09-29','YYYY-MM-DD'), NULL, '02/5006', 'PHYS-BSC');
+INSERT INTO enrollment (enrollment_id, enrollment_date, grade, student_matric_no, course_code)
+VALUES (50011, TO_DATE('2025-09-29','YYYY-MM-DD'), NULL, '02/5007', 'CHEM-BSC');
+-- 9) teacher (staff ↔ module with hours per week)
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2001, 'BITS',   6.0);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2001, 'FDBS',   5.0);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2002, 'SDEV',   7.0);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2002, 'OOAD',   6.0);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2006, 'CIS201', 4.0);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2004, 'EE101',  5.5);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2009, 'PH101',  6.0);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2008, 'PH102',  5.0);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2010, 'CH101',  4.5);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2012, 'BI101',  6.5);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2007, 'CIS601', 5.0);
+INSERT INTO teacher (staff_no, module_code, hours_per_week) VALUES (2011, 'BIO201', 4.0);
+-- 10) Performance (student ↔ module: Pass/Fail)
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('00/5021', 'BITS',  'Pass');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('00/4647', 'SDEV',  'Pass');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('01/4670', 'FDBS',  'Fail');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('01/4765', 'OOAD',  'Pass');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('00/5021', 'FDBS',  'Pass');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('00/4647', 'FDBS',  'Fail');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('02/5002', 'PH101',  'Pass');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('02/5002', 'PH102',  'Fail');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('02/5003', 'CH101',  'Pass');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('02/5004', 'BI101',  'Pass');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('02/5004', 'BIO201', 'Fail');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('02/5005', 'CIS601', 'Pass');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('02/5006', 'PH101',  'Fail');
+INSERT INTO performance (matric_no, module_code, performance) VALUES ('02/5007', 'CH101',  'Fail');
+
+
+-- Example: staff 2001 teacher BITS and FDBS
+INSERT INTO taught_by (staff_no, module_code) VALUES (2001, 'BITS');
+INSERT INTO taught_by (staff_no, module_code) VALUES (2001, 'FDBS');
+-- staff 2002 teacher SDEV and OOAD
+INSERT INTO taught_by (staff_no, module_code) VALUES (2002, 'SDEV');
+INSERT INTO taught_by (staff_no, module_code) VALUES (2002, 'OOAD');
+-- staff 2006 teacher CIS201
+INSERT INTO taught_by (staff_no, module_code) VALUES (2006, 'CIS201');
+-- staff 2004 teacher EE101
+INSERT INTO taught_by (staff_no, module_code) VALUES (2004, 'EE101');
+-- staff 2009 teacher PH101, staff 2008 teacher PH102
+INSERT INTO taught_by (staff_no, module_code) VALUES (2009, 'PH101');
+INSERT INTO taught_by (staff_no, module_code) VALUES (2008, 'PH102');
+-- staff 2010 teacher CH101
+INSERT INTO taught_by (staff_no, module_code) VALUES (2010, 'CH101');
+-- staff 2012 teacher BI101, staff 2011 teacher BIO201
+INSERT INTO taught_by (staff_no, module_code) VALUES (2012, 'BI101');
+INSERT INTO taught_by (staff_no, module_code) VALUES (2011, 'BIO201');
+-- staff 2007 teacher CIS601
+INSERT INTO taught_by (staff_no, module_code) VALUES (2007, 'CIS601');
+COMMIT;

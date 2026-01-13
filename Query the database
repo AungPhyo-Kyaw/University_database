@@ -1,0 +1,224 @@
+--Q1. Departments located in E Block
+
+
+SELECT
+ d.dept_no,
+ d.name AS department_name,
+ d.phone,
+ d.fax,
+ d.location,
+ d.manager_staff_no,
+ d.manager_start_date
+FROM department d
+WHERE d.location = 'E Block'
+ORDER BY d.dept_no;
+Q2. Title, start, end dates of all modules in the PgDIT course
+
+SELECT
+ m.title AS module_title,
+ m.start_date,
+ m.end_date
+FROM module m
+WHERE m.course_code = 'PGDIT'
+ORDER BY m.start_date, m.end_date;
+
+--Q3. Female academic staff who manage a department (name, address, salary)
+SELECT
+ s.f_name || ' ' || s.l_name AS staff_name,
+ s.address,
+ s.salary,
+ d.dept_no,
+ d.name AS department_name,
+ d.manager_start_date
+FROM academic_staff s
+JOIN department d
+ ON d.manager_staff_no = s.staff_no
+WHERE s.sex = 'F'
+ORDER BY d.dept_no, s.l_name, s.f_name;
+
+--Q4. Lecturers with a PhD (name, sex, salary)
+
+SELECT
+ s.f_name || ' ' || s.l_name AS staff_name,
+ s.sex,
+ s.salary
+FROM academic_staff s
+WHERE s.post = 'Lecturer'
+ AND UPPER(s.qualifications) LIKE '%PHD%'
+ORDER BY s.l_name, s.f_name;
+
+--Q5. Academic staff employed by CIS department (last name, post, qualifications)
+
+SELECT
+ s.l_name AS last_name,
+ s.post,
+ s.qualifications
+FROM academic_staff s
+JOIN department d ON d.dept_no = s.dept_no
+WHERE d.name = 'CIS'
+ORDER BY s.l_name;
+
+--Q6. Students studying the 'multi-media' module (matric_no, last name, sex), ordered by last name
+SELECT
+ st.matric_no,
+ st.l_name AS last_name,
+ st.sex
+FROM performance p
+JOIN module m ON m.module_code = p.module_code
+JOIN student st ON st.matric_no = p.matric_no
+WHERE LOWER(m.title) = 'multi-media'
+ORDER BY st.l_name ASC;
+
+--Q7. Staff whose salary is greater than the average salary (staff_no, last name, sex, post)
+SELECT
+ s.staff_no,
+ s.l_name AS last_name,
+ s.sex,
+ s.post
+FROM academic_staff s
+WHERE s.salary > (SELECT AVG(salary) FROM academic_staff)
+ORDER BY s.salary DESC, s.l_name;
+
+--Q8. Courses with more than 10 students (course title and number of students)
+SELECT
+ c.title AS course_title,
+ COUNT(st.matric_no) AS number_of_students
+FROM course c
+JOIN student st ON st.course_code = c.course_code
+GROUP BY c.title
+HAVING COUNT(st.matric_no) > 10
+ORDER BY number_of_students DESC;
+
+--Q9. Number of female vs male academic staff in CIS department
+
+SELECT
+ d.name AS department_name,
+ SUM(CASE WHEN s.sex = 'F' THEN 1 ELSE 0 END) AS female_count,
+ SUM(CASE WHEN s.sex = 'M' THEN 1 ELSE 0 END) AS male_count
+FROM department d
+JOIN academic_staff s ON s.dept_no = d.dept_no
+WHERE d.name = 'CIS'
+GROUP BY d.name;
+
+
+--Q10. Staff who spend more than 6 hours teaching any module (last name, module title, hours)
+SELECT
+ s.l_name AS staff_last_name,
+ m.title AS module_title,
+ t.hours_per_week
+FROM teaches t
+JOIN academic_staff s ON s.staff_no = t.staff_no
+JOIN module m ON m.module_code = t.module_code
+WHERE t.hours_per_week > 6
+ORDER BY s.l_name, m.title;
+
+
+--Q11. Crosstab: per department, number of female and male academic staff
+
+SELECT
+ d.name AS department_name,
+ SUM(CASE WHEN s.sex = 'F' THEN 1 ELSE 0 END) AS female,
+ SUM(CASE WHEN s.sex = 'M' THEN 1 ELSE 0 END) AS male
+FROM department d
+LEFT JOIN academic_staff s ON s.dept_no = d.dept_no
+GROUP BY d.name
+ORDER BY d.name;
+
+--Q12. Course managers list
+SELECT
+ c.title AS course_title,
+ d.name AS department_name,
+ s.f_name || ' ' || s.l_name AS course_leader
+FROM course c
+JOIN department d ON d.dept_no = c.dept_no
+LEFT JOIN academic_staff s ON s.staff_no = c.leader_staff_no
+ORDER BY d.name, c.title;
+
+--Q13. Average salary per department
+
+SELECT
+ d.name AS department_name,
+ ROUND(AVG(s.salary), 2) AS avg_salary
+FROM department d
+JOIN academic_staff s ON s.dept_no = d.dept_no
+GROUP BY d.name
+ORDER BY avg_salary DESC;
+
+--Q14. Highest-paid staff member in each department
+
+SELECT department_name, staff_no, full_name, salary
+FROM (
+ SELECT
+ d.name AS department_name,
+ s.staff_no,
+ s.f_name || ' ' || s.l_name AS full_name,
+ s.salary,
+ ROW_NUMBER() OVER (PARTITION BY d.name ORDER BY s.salary DESC) AS rn
+ FROM department d
+ JOIN academic_staff s ON s.dept_no = d.dept_no
+)
+WHERE rn = 1
+ORDER BY salary DESC;
+
+--Q15. Students who failed at least one module
+
+SELECT
+ st.matric_no,
+ st.f_name || ' ' || st.l_name AS student_name,
+ st.course_code
+FROM performance p
+JOIN student st ON st.matric_no = p.matric_no
+WHERE p.performance = 'Fail'
+ORDER BY st.l_name, st.f_name;
+
+--Q16. Modules taught by more than one staff member
+SELECT
+ m.title AS module_title,
+ COUNT(*) AS num_staff
+FROM teaches t
+JOIN module m ON m.module_code = t.module_code
+GROUP BY m.title
+HAVING COUNT(*) > 1
+ORDER BY num_staff DESC, module_title;
+--Q17. Staff teaching more than two modules
+--
+SELECT
+ s.staff_no,
+ s.l_name AS last_name,
+ COUNT(t.module_code) AS modules_taught
+FROM academic_staff s
+JOIN teaches t ON t.staff_no = s.staff_no
+GROUP BY s.staff_no, s.l_name
+HAVING COUNT(t.module_code) > 2
+ORDER BY modules_taught DESC, s.l_name;
+
+--Q18. Courses with no modules
+SELECT c.course_code, c.title
+FROM course c
+LEFT JOIN module m ON m.course_code = c.course_code
+WHERE m.course_code IS NULL
+ORDER BY c.title;
+Show more lines
+Q19. Students missing a next-of-kin
+SELECT st.matric_no, st.f_name || ' ' || st.l_name AS student_name
+FROM student st
+LEFT JOIN next_of_kin nk ON nk.student_matric_no = st.matric_no
+WHERE nk.student_matric_no IS NULL
+ORDER BY st.l_name;
+--Q20. Module coordinators
+
+SELECT
+ m.title AS module_title,
+ COALESCE(s.f_name || ' ' || s.l_name, 'Unassigned') AS coordinator
+FROM module m
+LEFT JOIN academic_staff s ON s.staff_no = m.coordinator_staff_no
+ORDER BY m.title;
+--Q21. Average teaching hours per module
+SELECT
+ m.title AS module_title,
+ ROUND(AVG(t.hours_per_week), 2) AS avg_hours_per_week
+FROM module m
+JOIN teaches t ON t.module_code = m.module_code
+GROUP BY m.title
+ORDER BY avg_hours_per_week DESC, m.title;
+
